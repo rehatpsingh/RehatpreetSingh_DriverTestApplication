@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head File -->
+<%- include('layouts/head'); %>
+
+<body>
+    <!-- Navigation -->
+    <%- include('layouts/nav'); %>
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('assets/img/login-bg.jpg')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>Login</h1>
+                        <span class="subheading">DriveTest Booking Kiosk</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <!-- Login Form (Placeholder) -->
+                <form>
+                    <div class="mb-3">
+                        <label for="usernameInput" class="form-label">Username:</label>
+                        <input type="text" class="form-control" id="usernameInput" name="username" placeholder="Enter your username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="passwordInput" class="form-label">Password:</label>
+                        <input type="password" class="form-control" id="passwordInput" name="password" placeholder="Enter your password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+
+                <!-- Additional Text (Under Construction) -->
+                <p class="mt-4">Under construction. Signup functionality will be added later.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <%- include('layouts/footer'); %>
+
+    <!-- Bootstrap scripts -->
+    <%- include('layouts/script'); %>
+
+</body>
+
+</html>
