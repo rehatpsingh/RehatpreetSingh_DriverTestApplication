@@ -3,7 +3,6 @@
 
 <!-- Head File -->
 <%- include('layouts/head'); %>
-
 <body>
     <!-- Navigation -->
     <%- include('layouts/nav'); %>
@@ -30,9 +29,22 @@
                 <label for="licenseNumberInput">License Number:</label>
                 <input type="text" id="licenseNumberInput" name="licenseNumber" placeholder="Enter License Number">
 
-                <!-- Data Display Form (Placeholder) -->
+                <!-- Data Display Form -->
                 <div id="dataDisplayForm">
-                    <!-- Display pulled data here (to be implemented) -->
+                    <!-- User data will be displayed here -->
+                </div>
+
+                <!-- Editable Car Details Form -->
+                <div id="carDetailsForm" style="display: none;">
+                    <label for="makeInput">Make:</label>
+                    <input type="text" id="makeInput" name="make" placeholder="Enter Car Make">
+                    <label for="modelInput">Model:</label>
+                    <input type="text" id="modelInput" name="model" placeholder="Enter Car Model">
+                    <label for="yearInput">Year:</label>
+                    <input type="number" id="yearInput" name="year" placeholder="Enter Car Year">
+                    <label for="plateNumberInput">Plate Number:</label>
+                    <input type="text" id="plateNumberInput" name="plateNumber" placeholder="Enter Plate Number">
+                    <button class="btn btn-primary" id="updateDetailsButton">Update Details</button>
                 </div>
 
                 <!-- Divider -->
@@ -40,7 +52,7 @@
 
                 <!-- Pager -->
                 <div class="d-flex justify-content-end mb-4">
-                    <button class="btn btn-primary text-uppercase">Fetch Data</button>
+                    <button class="btn btn-primary text-uppercase" id="fetchDataButton">Fetch Data</button>
                 </div>
             </div>
         </div>
@@ -51,6 +63,70 @@
 
     <!-- Bootstrap scripts -->
     <%- include('layouts/script'); %>
-</body>
 
+   <!-- JavaScript for fetching and displaying user data -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const fetchDataButton = document.querySelector("#fetchDataButton");
+
+        fetchDataButton.addEventListener("click", function() {
+            const licenseNumber = document.querySelector("#licenseNumberInput").value;
+            fetch('/fetchUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ licenseNumber })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the fetched user data
+                document.getElementById('dataDisplayForm').innerHTML = `
+                    <p>First Name: ${data.firstName}</p>
+                    <p>Last Name: ${data.lastName}</p>
+                    <p>Age: ${data.age}</p>
+                    <p>License Number: ${data.licenseNumber}</p>
+                    <p>Car Details:</p>
+                    <p>Make: <input type="text" id="makeInput" value="${data.carDetails.make}"></p>
+                    <p>Model: <input type="text" id="modelInput" value="${data.carDetails.model}"></p>
+                    <p>Year: <input type="number" id="yearInput" value="${data.carDetails.year}"></p>
+                    <p>Plate Number: <input type="text" id="plateNumberInput" value="${data.carDetails.plateNo}"></p>
+                    <button class="btn btn-primary" id="updateDetailsButton">Update Details</button>
+                `;
+
+                // Add event listener to the "Update Details" button
+                document.getElementById('updateDetailsButton').addEventListener("click", function() {
+                    // Retrieve updated car details from the input fields
+                    const updatedMake = document.getElementById('makeInput').value;
+                    const updatedModel = document.getElementById('modelInput').value;
+                    const updatedYear = document.getElementById('yearInput').value;
+                    const updatedPlateNumber = document.getElementById('plateNumberInput').value;
+
+                    // Send updated car details to the server for updating in the database
+                    fetch('/updateCarDetails', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            licenseNumber: document.getElementById('licenseNumberInput').value,
+                            make: updatedMake,
+                            model: updatedModel,
+                            year: updatedYear,
+                            plateNumber: updatedPlateNumber
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Display success message
+                        alert("Details updated successfully");
+                    })
+                    .catch(error => console.error('Error updating details:', error));
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+        });
+    });
+</script>
+</body>
 </html>
