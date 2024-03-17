@@ -51,7 +51,7 @@ app.get('/login', renderLoginController);
 app.post('/login', loginController); 
 
 //6. Signup
-app.get('/signup', signupController);
+app.post('/signup', signupController);
 
 //7. UpdateUserDetails
 app.post('/updateUserDetails', updateUserDetailsController); 

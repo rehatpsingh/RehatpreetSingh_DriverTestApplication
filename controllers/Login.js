@@ -1,18 +1,34 @@
+const bcrypt = require('bcrypt');
 const User = require('../models/DriverTestModel');
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
     const { username, password } = req.body;
-    User.findOne({ username, password })
-        .then(user => {
-            if (user) {
+    try {
+        // Find the user by username
+        const user = await User.findOne({ username });
+        
+        // If user is found, compare passwords
+        if (user) {
+            // Compare the entered password with the hashed password in the database
+            const passwordMatch = await bcrypt.compare(password, user.password);
+            
+            if (passwordMatch) {
+                // Passwords match, set session variables and redirect to dashboard
                 req.session.userLoggedIn = true;
-                req.session.username = username; // Set the username in the session
+                req.session.username = username;
                 res.redirect('/');
             } else {
-                // If user credentials are invalid, redirect to login page with userLoggedIn as false
+                // Passwords do not match, redirect to login page
                 req.session.userLoggedIn = false;
-                res.redirect('login');
+                res.redirect('/login');
             }
-        })
-        .catch(err => res.status(500).json({ error: err.message }));
+        } else {
+            // User not found, redirect to login page
+            req.session.userLoggedIn = false;
+            res.redirect('/login');
+        }
+    } catch (err) {
+        // Handle error
+        res.status(500).json({ error: err.message });
+    }
 };
