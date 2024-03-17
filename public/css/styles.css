@@ -7648,6 +7648,12 @@ textarea.form-control-lg {
   font-size: calc(1.275rem + 0.3vw) !important;
 }
 
+.signup-form, .login-form {
+  border: 2px solid black;
+  padding: 20px;
+  border-radius: 10px;
+}
+
 .fs-5 {
   font-size: 1.25rem !important;
 }

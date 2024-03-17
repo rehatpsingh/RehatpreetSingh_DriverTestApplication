@@ -14,7 +14,7 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="site-heading">
-                        <h1>Login</h1>
+                        <h1>Login / Signup</h1>
                         <span class="subheading">DriveTest Booking Kiosk</span>
                     </div>
                 </div>
@@ -23,11 +23,40 @@
     </header>
 
     <!-- Main Content -->
-    <div class="container px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
-                <!-- Login Form (Placeholder) -->
-                <form>
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <!-- Signup Form -->
+                <form class="signup-form" action="/signup" method="POST">
+                    <h2>Signup</h2>
+                    <div class="mb-3">
+                        <label for="signupUsernameInput" class="form-label">Username:</label>
+                        <input type="text" class="form-control" id="signupUsernameInput" name="username" placeholder="Enter your username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="signupPasswordInput" class="form-label">Password:</label>
+                        <input type="password" class="form-control" id="signupPasswordInput" name="password" placeholder="Enter your password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="repeatPasswordInput" class="form-label">Repeat Password:</label>
+                        <input type="password" class="form-control" id="repeatPasswordInput" name="repeatPassword" placeholder="Repeat your password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="userTypeSelect" class="form-label">User Type:</label>
+                        <select class="form-select" id="userTypeSelect" name="userType">
+                            <option value="Driver">Driver</option>
+                            <option value="Examiner">Examiner</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Signup</button>
+                </form>
+            </div>
+            <div class="col-md-1"></div> <!-- Add a column for spacing -->
+            <div class="col-md-5">
+                <!-- Login Form -->
+                <form class="login-form" action="/login" method="POST">
+                    <h2>Login</h2>
                     <div class="mb-3">
                         <label for="usernameInput" class="form-label">Username:</label>
                         <input type="text" class="form-control" id="usernameInput" name="username" placeholder="Enter your username">
@@ -38,9 +67,6 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Login</button>
                 </form>
-
-                <!-- Additional Text (Under Construction) -->
-                <p class="mt-4">Under construction. Signup functionality will be added later.</p>
             </div>
         </div>
     </div>
