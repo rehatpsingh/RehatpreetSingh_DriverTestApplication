@@ -16,7 +16,6 @@ module.exports = async (req, res) => {
                 res.render('G2', { userLoggedIn: true, userDetails: user });
             }
         } catch (error) {
-            // Handle any errors that occur during database operations
             console.error('Error fetching user details:', error);
             res.status(500).send('Internal Server Error');
         }

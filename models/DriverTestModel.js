@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     username: { type: String, unique: true },
     password: { type: String }, 
     userType: { type: String },
-    licenseNumber: { type: String, unique: true },
+    licenseNumber: { type: String },
     carDetails: {
         make: { type: String },
         model: { type: String },
