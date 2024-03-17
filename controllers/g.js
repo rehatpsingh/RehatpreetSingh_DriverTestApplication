@@ -1,4 +1,5 @@
 const User = require('../models/DriverTestModel');
+
 module.exports = async (req, res) => {
     const userLoggedIn = req.session.userLoggedIn || false;
     
@@ -11,7 +12,7 @@ module.exports = async (req, res) => {
 
             if (!user || !user.licenseNumber) {
                 // If user is not found or does not have a license number, render the G page with userNotFound true
-                res.render('G', { userNotFound: true, userLoggedIn });
+                res.render('G', { userNotFound: true, userLoggedIn, userDetails: null });
             } else {
                 // If user is found and has a license number, render the G page with user details
                 res.render('G', { userDetails: user, userLoggedIn });
@@ -24,4 +25,4 @@ module.exports = async (req, res) => {
         // If user is not logged in, redirect to login page
         res.redirect('/Login');
     }
-}
+};
