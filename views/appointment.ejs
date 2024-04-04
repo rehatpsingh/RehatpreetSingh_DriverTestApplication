@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head File -->
+<%- include('layouts/head'); %>
+
+<body>
+    <!-- Navigation -->
+    <%- include('layouts/nav', { userLoggedIn: userLoggedIn, userType: userType }); %>
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('assets/img/login-bg.jpg')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>Appointment Slots</h1>
+                        <span class="subheading">DriveTest Booking Kiosk</span>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container px-4 px-lg-5 mt-5">
+        <!-- Display error message -->
+        <% if (message && message.type === 'error') { %>
+            <div class="alert alert-danger" role="alert">
+                <%= message.text %>
+            </div>
+            <% } %>
+            <!-- Display success message -->
+            <% if (message && message.type === 'success') { %>
+            <div class="alert alert-success" role="alert">
+                <%= message.text %>
+            </div>
+            <% } %>
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <!-- Add Appointment Slot Form -->
+                <form action="/appointment" method="post">
+                    <h2>Add Appointment Slot</h2>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Date:</label>
+                        <input type="date" class="form-control" id="date" name="date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="timeslot" class="form-label">Select Time Slot:</label>
+                        <select class="form-select" id="timeslot" name="timeslot">
+                            <option value="9:00">9:00 AM</option>
+                            <option value="9:30">9:30 AM</option>
+                            <option value="10:00">10:00 AM</option>
+                            <option value="10:30">10:30 AM</option>
+                            <option value="11:00">11:00 AM</option>
+                            <option value="11:30">11:30 AM</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Slot</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <%- include('layouts/footer'); %>
+
+    <!-- Bootstrap scripts -->
+    <%- include('layouts/script'); %>
+
+</body>
+
+</html>

@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema({
         model: { type: String },
         year: { type: Number },
         plateNo: { type: String } 
+    },
+    appointment: {
+        date: { type: Date },
+        time: { type: String }
     }
 });
 

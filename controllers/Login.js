@@ -14,6 +14,7 @@ module.exports = async (req, res) => {
             if (passwordMatch) {
                 req.session.userLoggedIn = true;
                 req.session.username = username;
+                req.session.userType = user.userType; 
                 res.redirect('/');
             } else {
                 req.session.userLoggedIn = false;

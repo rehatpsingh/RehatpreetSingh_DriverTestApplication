@@ -1,4 +1,5 @@
 module.exports = (req, res) => {
     const userLoggedIn = req.session.userLoggedIn || false;
-    res.render('Login', { userLoggedIn, req });
+    const userType = req.session.userType;
+    res.render('Login', { userLoggedIn, userType, req });
 };

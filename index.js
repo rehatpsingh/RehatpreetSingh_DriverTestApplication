@@ -12,6 +12,7 @@ const renderLoginController = require('./controllers/renderLogin');
 const signupController = require('./controllers/signup');
 const updateUserDetailsController = require('./controllers/userDetailsController');
 const logoutController = require('./controllers/logout');
+const appointmentController = require('./controllers/appointmentController');
 
 // Creating Application
 const app = express();
@@ -28,21 +29,47 @@ app.use(session({
     cookie: { secure: false }
 }));
 
+// Middleware for Driver authentication
+const driverAuthMiddleware = (req, res, next) => {
+    if (req.session && req.session.userType === "Driver") {
+        next(); // Allow access for Driver
+    } else {
+        res.redirect('/login'); // Redirect to login page if not a Driver
+    }
+};
+
+// Middleware for Admin authentication
+const adminAuthMiddleware = (req, res, next) => {
+    if (req.session && req.session.userType === "Admin") {
+        next(); // Allow access for Admin
+    } else {
+        res.redirect('/login'); // Redirect to login page if not an Admin
+    }
+};
+
+// Middleware for Examiner authentication
+const examinerAuthMiddleware = (req, res, next) => {
+    if (req.session && req.session.userType === "Examiner") {
+        next(); // Allow access for Admin
+    } else {
+        res.redirect('/login'); // Redirect to login page if not an Admin
+    }
+};
+
 // MongoDB Connection
 mongoose.connect('mongodb+srv://rehatpreet2101:20031975Reh@fullstackclusterrehatpr.1qogxje.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.error('MongoDB connection error:', err));
-
 
 // Get route using render
 // 1. Dashboard
 app.get('/', dashboardController);
 
 // 2. G page
-app.get('/G', gController);
+app.get('/G', driverAuthMiddleware , gController);
 
 //3. G2 page
-app.get('/G2', g2Controller);
+app.get('/G2', driverAuthMiddleware , g2Controller.renderG2Page);
 
 //4. Login page
 app.get('/login', renderLoginController); 
@@ -58,6 +85,12 @@ app.post('/updateUserDetails', updateUserDetailsController);
 
 //8. Logout
 app.get('/logout', logoutController);
+
+// Get route for appointment page
+app.get('/appointment', adminAuthMiddleware, appointmentController.showAppointmentPage);
+
+// POST route to add appointment slot
+app.post('/appointment', adminAuthMiddleware, appointmentController.addAppointmentSlot);
 
 // Start the server
 app.listen(4000, () => {
