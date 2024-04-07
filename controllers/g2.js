@@ -24,14 +24,14 @@ exports.renderG2Page = async (req, res) => {
                 const convertedDate = dateParts + "T00:00:00.000+00:00";
 
                 // Fetch available appointment slots for the current date
-                const availableSlots = await Appointment.find({ date: convertedDate, isTimeSlotAvailable: true });
+                const availableSlots = await Appointment.find({ date: convertedDate, isTimeSlotAvailable: true, testType: "G2" });
 
                 // Determine if the user has an appointment (consider both date and time)
-                const userHasAppointment = user.appointment && user.appointment.date && user.appointment.time;
+                const userHasAppointment = user.appointment && user.appointment.g2date && user.appointment.g2time;
 
                 // If user has an appointment, fetch appointment date and time from user's collection
-                const appointmentDate = userHasAppointment ? user.appointment.date.toISOString().split('T')[0] : '';
-                const appointmentTime = userHasAppointment ? user.appointment.time : '';
+                const appointmentDate = userHasAppointment ? user.appointment.g2date.toISOString().split('T')[0] : '';
+                const appointmentTime = userHasAppointment ? user.appointment.g2time : '';
 
                 // If user is found, render the G2 page with user details and available slots
                 res.render('G2', { userLoggedIn: true, userDetails: user, userType: req.session.userType, currentDate: currDate, availableSlots, userHasAppointment, appointmentDate, appointmentTime });
@@ -42,6 +42,5 @@ exports.renderG2Page = async (req, res) => {
         }
     }
 };
-
 
 module.exports = exports;

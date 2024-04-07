@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head File -->
+<%- include('layouts/head'); %>
+<body>
+    <!-- Navigation -->
+    <%- include('layouts/nav'); %>
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('assets/img/g-bg.jpeg')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7 text-center">
+                    <div class="site-heading">
+                        <h1>Examiner</h1>
+                        <span class="subheading">DriveTest Booking Kiosk</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <h1 class="text-center">Driver Details</h1>
+        <h2>Name: <%= driverDetails.firstName %> <%= driverDetails.lastName %></h2>
+        <p>Car Details:</p>
+        <ul class="list-group">
+            <li class="list-group-item">Make: <%= driverDetails.carDetails.make %></li>
+            <li class="list-group-item">Model: <%= driverDetails.carDetails.model %></li>
+            <li class="list-group-item">Year: <%= driverDetails.carDetails.year %></li>
+            <li class="list-group-item">Plate Number: <%= driverDetails.carDetails.plateNo %></li>
+        </ul>
+        <form action="/examinerAction" method="post" class="mt-4">
+            <div class="form-group" style="width: 70%;">
+                <textarea class="form-control" name="comment" placeholder="Add comment"></textarea>
+            </div>
+            <div class="form-check mt-3" style="width: 70%;">
+                <input class="form-check-input" type="radio" name="passFail" id="pass" value="Pass">
+                <label class="form-check-label" for="pass">Pass</label>
+            </div>
+            <div class="form-check mt-2" style="width: 70%;">
+                <input class="form-check-input" type="radio" name="passFail" id="fail" value="Fail">
+                <label class="form-check-label" for="fail">Fail</label>
+            </div>
+            <input type="hidden" name="userId" value="<%= driverDetails._id %>">
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <%- include('layouts/footer'); %>
+
+    <!-- Bootstrap scripts -->
+    <%- include('layouts/script'); %>
+</body>
+
+</html>

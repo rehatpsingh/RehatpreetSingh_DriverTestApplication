@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head File -->
+<%- include('layouts/head'); %>
+<body>
+    <!-- Navigation -->
+    <%- include('layouts/nav'); %>
+
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('assets/img/g-bg.jpeg')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>Examiner</h1>
+                        <span class="subheading">DriveTest Booking Kiosk</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container px-4 px-lg-5 mt-5">
+        <h1>Appointments</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Driver</th>
+                    <th>TestType</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% appointments.forEach(appointment => { %>
+                    <tr>
+                        <td><%= appointment.appointment.date.toLocaleDateString() %></td>
+                        <td><%= appointment.appointment.time %> AM</td>
+                        <td><%= appointment.firstName %></td>
+                        <td><%= appointment.testType %></td>
+                        <td><a href="/driverDetails?driverId=<%= appointment._id %>">View Details</a></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</div>    
+
+<!-- Footer -->
+<%- include('layouts/footer'); %>
+
+<!-- Bootstrap scripts -->
+<%- include('layouts/script'); %>
+
+</body>
+</html>

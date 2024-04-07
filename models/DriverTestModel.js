@@ -18,9 +18,15 @@ const userSchema = new mongoose.Schema({
         plateNo: { type: String } 
     },
     appointment: {
-        date: { type: Date },
-        time: { type: String }
-    }
+        g2date: { type: Date },
+        g2time: { type: String },
+        gdate: { type: Date },
+        gtime: { type: String }
+    },
+    // New fields for Examiner's features
+    testType: { type: String }, 
+    comment: { type: String }, 
+    passOrFail: { type: String } 
 });
 
 // Hash password and license number before saving

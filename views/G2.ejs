@@ -50,6 +50,7 @@
                                 <input type="date" class="form-control" id="dob" name="dob" value="<%= userDetails.dob ? userDetails.dob.toISOString().split('T')[0] : '' %>" <% if(userDetails.dob) { %>readonly<% } %>>
                             </div>
                         </div>
+                        <input type="hidden" id="testType" name="testType" value="G2">
                     </div>
                     <hr>
                     <!-- Car Information Section -->
@@ -74,29 +75,32 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Available Time Slots Section -->
-                    <div class="mb-3">
-                        <h4>Available Time Slots</h4>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="appointmentDate" class="form-label">Appointment Date:</label>
-                                <input type="text" class="form-control <%= userHasAppointment ? 'text-muted' : '' %>" id="appointmentDate" name="appointmentDate" value="<%= userHasAppointment ? appointmentDate : currentDate %>" readonly>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="appointmentTime" class="form-label">Appointment Time:</label>
-                                <select class="form-select" id="appointmentTime" name="appointmentTime" <%= userHasAppointment ? 'disabled' : '' %>>
-                                    <option value="">-- Select Time --</option>
-                                    <% if (userHasAppointment) { %>
-                                    <option value="<%= userDetails.appointment.time %>" selected><%= userDetails.appointment.time %> AM</option>
-                                    <% } else { %>
-                                    <% availableSlots.forEach(function(slot) { %>
-                                    <option value="<%= slot.time %>"><%= slot.time %> AM</option>
-                                    <% }); %>
-                                    <% } %>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+<!-- Available Time Slots Section -->
+<div class="mb-3">
+    <h4>Available Time Slots</h4>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="appointmentDate" class="form-label">Appointment Date:</label>
+            <input type="text" class="form-control <%= userHasAppointment ? 'text-muted' : '' %>" id="appointmentDate" name="appointmentDate" value="<%= userHasAppointment ? appointmentDate : currentDate %>" readonly>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="appointmentTime" class="form-label">Appointment Time:</label>
+            <% if (userHasAppointment) { %>
+                <% var appointmentTimeWithoutAM = userDetails.appointment.g2time.replace(' AM', ''); %>
+                <input type="text" class="form-control" id="appointmentTime" name="appointmentTime" value="<%= appointmentTimeWithoutAM %>" readonly>
+            <% } else { %>
+                <select class="form-select" id="appointmentTime" name="appointmentTime">
+                    <option value="">-- Select Time --</option>
+                    <% availableSlots.forEach(function(slot) { %>
+                        <option value="<%= slot.time %>"><%= slot.time %> AM</option>
+                    <% }); %>
+                </select>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+
                     <!-- Pager-->
                     <div class="d-flex justify-content-end mb-4">
                         <button type="submit" class="btn btn-primary text-uppercase">Submit →</button>

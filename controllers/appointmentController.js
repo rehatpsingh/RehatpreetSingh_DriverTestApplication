@@ -9,14 +9,14 @@ exports.showAppointmentPage = (req, res) => {
 
 // Add appointment slot
 exports.addAppointmentSlot = async (req, res) => {
-    const { date, timeslot } = req.body;
+    const { date, timeslot, testType } = req.body;
     try {
-        const existingSlot = await Appointment.findOne({ date, time: timeslot });
+        const existingSlot = await Appointment.findOne({ date, time: timeslot, testType });
         if (existingSlot) {
             res.render('appointment', { message: { type: 'error', text: 'Slot exists already! Please change date or time.' }, userLoggedIn: true, userType: 'Admin' });
         } else {
             // Create a new appointment slot with isTimeSlotAvailable set to true
-            await Appointment.create({ date, time: timeslot, isTimeSlotAvailable: true });
+            await Appointment.create({ date, time: timeslot, isTimeSlotAvailable: true, testType });
             res.render('appointment', { message: { type: 'success', text: 'Slot added successfully!' }, userLoggedIn: true, userType: 'Admin' });
         }
     } catch (error) {

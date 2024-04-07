@@ -13,6 +13,8 @@ const signupController = require('./controllers/signup');
 const updateUserDetailsController = require('./controllers/userDetailsController');
 const logoutController = require('./controllers/logout');
 const appointmentController = require('./controllers/appointmentController');
+const examinerController = require('./controllers/examinerController');
+const driverDetailsController = require('./controllers/driverDetailsController');
 
 // Creating Application
 const app = express();
@@ -91,6 +93,13 @@ app.get('/appointment', adminAuthMiddleware, appointmentController.showAppointme
 
 // POST route to add appointment slot
 app.post('/appointment', adminAuthMiddleware, appointmentController.addAppointmentSlot);
+
+// Get route for Examiner page
+app.get('/examiner', examinerAuthMiddleware, examinerController.showAppointments);
+
+app.post('/examinerAction', examinerAuthMiddleware, examinerController.examinerAction);
+
+app.get('/driverDetails', examinerAuthMiddleware, driverDetailsController.renderDriverDetailsPage);
 
 // Start the server
 app.listen(4000, () => {

@@ -2,7 +2,7 @@ const User = require('../models/DriverTestModel');
 const Appointment = require('../models/appointment');
 
 module.exports = async (req, res) => {
-    const { firstName, lastName, age, licenseNumber, dob, make, model, year, plateNumber, appointmentDate, appointmentTime } = req.body;
+    const { firstName, lastName, age, licenseNumber, dob, make, model, year, plateNumber, appointmentDate, appointmentTime, testType } = req.body;
 
     // Retrieve the username of the logged-in user from the session
     const username = req.session.username;
@@ -26,8 +26,17 @@ module.exports = async (req, res) => {
         user.carDetails.model = model;
         user.carDetails.year = year;
         user.carDetails.plateNo = plateNumber;
-        user.appointment.date = appointmentDate;
-        user.appointment.time = appointmentTime;
+        if(testType == "G2")
+        {
+            user.appointment.g2date = appointmentDate;
+            user.appointment.g2time = appointmentTime;
+        }
+        else 
+        {
+            user.appointment.gdate = appointmentDate;
+            user.appointment.gtime = appointmentTime;
+        }
+        user.testType = testType;
 
         // Save the updated user to the database
         await user.save();

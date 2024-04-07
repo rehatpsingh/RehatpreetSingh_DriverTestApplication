@@ -72,10 +72,34 @@
                                         <label for="plateNumber" class="form-label">Plate Number</label>
                                         <input type="text" class="form-control" id="plateNumber" name="plateNumber" value="<%= userDetails.carDetails.plateNo %>" required>
                                     </div>
+                                    <input type="hidden" id="testType" name="testType" value="G">
                                 </div>
                             </div>
                             <!-- Divider-->
                             <hr class="my-4" />
+                                                <!-- Available Time Slots Section -->
+                    <div class="mb-3">
+                        <h4>Available Time Slots</h4>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="appointmentDate" class="form-label">Appointment Date:</label>
+                                <input type="text" class="form-control <%= userHasAppointment ? 'text-muted' : '' %>" id="appointmentDate" name="appointmentDate" value="<%= userHasAppointment ? appointmentDate : currentDate %>" readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="appointmentTime" class="form-label">Appointment Time:</label>
+                                <select class="form-select" id="appointmentTime" name="appointmentTime" <%= userHasAppointment ? 'disabled' : '' %>>
+                                    <option value="">-- Select Time --</option>
+                                    <% if (userHasAppointment) { %>
+                                    <option value="<%= userDetails.appointment.time %>" selected><%= userDetails.appointment.time %> AM</option>
+                                    <% } else { %>
+                                    <% availableSlots.forEach(function(slot) { %>
+                                    <option value="<%= slot.time %>"><%= slot.time %> AM</option>
+                                    <% }); %>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                             <!-- Pager-->
                             <div class="d-flex justify-content-end mb-4">
                                 <button type="submit" class="btn btn-primary text-uppercase">Update Details →</button>
