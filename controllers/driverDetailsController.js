@@ -9,7 +9,6 @@ exports.renderDriverDetailsPage = async (req, res) => {
         // Fetch user details corresponding to the provided driverId
         const driverDetails = await User.findById(driverId);
 
-        console.log(driverDetails);
         // Determine if the user is logged in
         const userLoggedIn = true;
 

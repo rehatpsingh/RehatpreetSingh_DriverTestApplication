@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Head File-->
+<!-- Head File -->
 <%- include('layouts/head'); %>
 
 <body>
-    <!--Navigation-->
+    <!-- Navigation -->
     <%- include('layouts/nav'); %>
-    <!-- Page Header-->
+
+    <!-- Page Header -->
     <header class="masthead" style="background-image: url('assets/img/g2-bg.jpg')">
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -20,7 +21,7 @@
             </div>
         </div>
     </header>
-    <!-- Main Content-->
+    <!-- Main Content -->
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
@@ -31,7 +32,7 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="firstName" class="form-label">First Name</label>
-                                <input type="text" class="form-control" id="firstName" name="firstName" value="<%= userDetails.firstName %>" <% if(userDetails.firstName) { %>readonly<% } %>>
+                                <input type="text" class="form-control" id="firstName" name="firstName" value="<%= userDetails.firstName %>" <% if(userDetails.firstName) { %>readonly<% } %> required>
                             </div>
                             <div class="col-md-6">
                                 <label for="lastName" class="form-label">Last Name</label>
@@ -75,44 +76,49 @@
                             </div>
                         </div>
                     </div>
-<!-- Available Time Slots Section -->
-<div class="mb-3">
-    <h4>Available Time Slots</h4>
-    <div class="row">
-        <div class="col-md-6 mb-3">
-            <label for="appointmentDate" class="form-label">Appointment Date:</label>
-            <input type="text" class="form-control <%= userHasAppointment ? 'text-muted' : '' %>" id="appointmentDate" name="appointmentDate" value="<%= userHasAppointment ? appointmentDate : currentDate %>" readonly>
-        </div>
-        <div class="col-md-6 mb-3">
-            <label for="appointmentTime" class="form-label">Appointment Time:</label>
-            <% if (userHasAppointment) { %>
-                <% var appointmentTimeWithoutAM = userDetails.appointment.g2time.replace(' AM', ''); %>
-                <input type="text" class="form-control" id="appointmentTime" name="appointmentTime" value="<%= appointmentTimeWithoutAM %>" readonly>
-            <% } else { %>
-                <select class="form-select" id="appointmentTime" name="appointmentTime">
-                    <option value="">-- Select Time --</option>
-                    <% availableSlots.forEach(function(slot) { %>
-                        <option value="<%= slot.time %>"><%= slot.time %> AM</option>
-                    <% }); %>
-                </select>
-            <% } %>
-        </div>
-    </div>
-</div>
-
-
-                    <!-- Pager-->
-                    <div class="d-flex justify-content-end mb-4">
-                        <button type="submit" class="btn btn-primary text-uppercase">Submit →</button>
+                    <!-- Available Time Slots Section -->
+                    <div class="mb-3">
+                        <h4>Available Time Slots</h4>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="appointmentDate" class="form-label">Appointment Date:</label>
+                                <input type="text" class="form-control <%= userHasAppointment ? 'text-muted' : '' %>" id="appointmentDate" name="appointmentDate" value="<%= userHasAppointment ? appointmentDate : currentDate %>" readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="appointmentTime" class="form-label">Appointment Time:</label>
+                                <% if (userHasAppointment) { %>
+                                    <input type="text" class="form-control" id="appointmentTime" name="appointmentTime" value="<%= userDetails.appointment.g2time %>" readonly>
+                                <% } else { %>
+                                    <select class="form-select" id="appointmentTime" name="appointmentTime">
+                                        <option value="">-- Select Time --</option>
+                                        <% availableSlots.forEach(function(slot) { %>
+                                            <option value="<%= slot.time %>"><%= slot.time %> AM</option>
+                                        <% }); %>
+                                    </select>
+                                <% } %>
+                            </div>
+                        </div>
                     </div>
-
+                    <% if (userDetails.passOrFail) { %>
+                        <div class="mb-3">
+                            <h4>Result</h4>
+                            <div class="result-box <%= userDetails.passOrFail === 'Pass' ? 'pass' : 'fail' %>">
+                                <p><%= userDetails.passOrFail %></p>
+                            </div>
+                            <p><%= userDetails.comment %></p>
+                        </div>
+                    <% } else { %>
+                        <div class="d-flex justify-content-end mb-4">
+                            <button type="submit" class="btn btn-primary text-uppercase">Submit →</button>
+                        </div>
+                    <% } %>
                 </form>
             </div>
         </div>
     </div>
-    <!--Footer-->
+    <!-- Footer -->
     <%- include('layouts/footer'); %>
-    <!--Bootstrap scripts-->
+    <!-- Bootstrap scripts -->
     <%- include('layouts/script'); %>
 </body>
 

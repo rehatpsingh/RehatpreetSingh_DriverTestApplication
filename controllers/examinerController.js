@@ -4,7 +4,8 @@ const User = require('../models/DriverTestModel');
 exports.showAppointments = async (req, res) => {
     try {
         // Fetch appointments from the database for the logged-in Examiner user
-        const appointments = await User.find({ testType: { $ne: null } });
+        const g2appointments = await User.find({ testType: { $ne: null } , testType : "G2"});
+        const gappointments = await User.find({ testType: { $ne: null } , testType : "G"});
 
         // Determine if the user is logged in
         const userLoggedIn = true;
@@ -13,7 +14,7 @@ exports.showAppointments = async (req, res) => {
         const userType = "Examiner";
 
         // Render the 'examiner' view with the fetched appointments data, userLoggedIn status, and userType
-        res.render('examiner', { appointments, userLoggedIn, userType });
+        res.render('examiner', { gappointments, g2appointments, userLoggedIn, userType });
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');

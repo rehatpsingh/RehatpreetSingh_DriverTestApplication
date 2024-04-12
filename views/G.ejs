@@ -77,33 +77,43 @@
                             </div>
                             <!-- Divider-->
                             <hr class="my-4" />
-                                                <!-- Available Time Slots Section -->
-                    <div class="mb-3">
-                        <h4>Available Time Slots</h4>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="appointmentDate" class="form-label">Appointment Date:</label>
-                                <input type="text" class="form-control <%= userHasAppointment ? 'text-muted' : '' %>" id="appointmentDate" name="appointmentDate" value="<%= userHasAppointment ? appointmentDate : currentDate %>" readonly>
+                            <!-- Available Time Slots Section -->
+                            <div class="mb-3">
+                                <h4>Available Time Slots</h4>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="appointmentDate" class="form-label">Appointment Date:</label>
+                                        <input type="text" class="form-control <%= userHasAppointment ? 'text-muted' : '' %>" id="appointmentDate" name="appointmentDate" value="<%= userHasAppointment ? appointmentDate : currentDate %>" readonly>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="appointmentTime" class="form-label">Appointment Time:</label>
+                                        <% if (userHasAppointment) { %>
+                                            <input type="text" class="form-control" id="appointmentTime" name="appointmentTime" value="<%= userDetails.appointment.gtime %>" readonly>
+                                        <% } else { %>
+                                            <select class="form-select" id="appointmentTime" name="appointmentTime" required>
+                                                <option value="">-- Select Time --</option>
+                                                <% availableSlots.forEach(function(slot) { %>
+                                                    <option value="<%= slot.time %>"><%= slot.time %> AM</option>
+                                                <% }); %>
+                                            </select>
+                                        <% } %>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="appointmentTime" class="form-label">Appointment Time:</label>
-                                <select class="form-select" id="appointmentTime" name="appointmentTime" <%= userHasAppointment ? 'disabled' : '' %>>
-                                    <option value="">-- Select Time --</option>
-                                    <% if (userHasAppointment) { %>
-                                    <option value="<%= userDetails.appointment.time %>" selected><%= userDetails.appointment.time %> AM</option>
-                                    <% } else { %>
-                                    <% availableSlots.forEach(function(slot) { %>
-                                    <option value="<%= slot.time %>"><%= slot.time %> AM</option>
-                                    <% }); %>
-                                    <% } %>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
                             <!-- Pager-->
-                            <div class="d-flex justify-content-end mb-4">
-                                <button type="submit" class="btn btn-primary text-uppercase">Update Details →</button>
-                            </div>
+                            <% if (userDetails.passOrFail) { %>
+                                <div class="mb-3">
+                                    <h4>Result</h4>
+                                    <div class="result-box <%= userDetails.passOrFail === 'Pass' ? 'pass' : 'fail' %>">
+                                        <p><%= userDetails.passOrFail %></p>
+                                    </div>
+                                    <p><%= userDetails.comment %></p>
+                                </div>
+                            <% } else { %>
+                                <div class="d-flex justify-content-end mb-4">
+                                    <button type="submit" class="btn btn-primary text-uppercase">Submit →</button>
+                                </div>
+                            <% } %>
                         </form>
                     <% } %>
                 </div>

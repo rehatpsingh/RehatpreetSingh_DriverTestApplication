@@ -237,6 +237,23 @@ sup {
   vertical-align: baseline;
 }
 
+.result-box {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  width: 15%;
+}
+
+.pass {
+  background-color: green;
+  color: white;
+}
+
+.fail {
+  background-color: red;
+  color: white;
+}
+
 sub {
   bottom: -0.25em;
 }

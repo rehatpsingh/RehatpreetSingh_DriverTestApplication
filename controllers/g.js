@@ -11,7 +11,6 @@ module.exports = async (req, res) => {
         try {
             // Find the user based on the username
             const user = await User.findOne({ username });
-            console.log(user);
             if (!user || !user.licenseNumber) {
                 // If user is not found or does not have a license number, render the G page with userNotFound true
                 res.render('G', { userNotFound: true, userType: req.session.userType, userLoggedIn, userDetails: null });
